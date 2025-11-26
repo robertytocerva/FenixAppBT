@@ -8,8 +8,11 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.drawable.TransitionDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -17,6 +20,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import org.json.JSONObject
@@ -62,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         tvFuego = findViewById(R.id.tvFuego)
         tvTemp = findViewById(R.id.tvTemp)
         tvHum = findViewById(R.id.tvHum)
-        tvHumo = findViewById(R.id.textView8)
+        tvHumo = findViewById(R.id.tvHumoValue)
         btnConectar = findViewById(R.id.btnConectar)
 
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -81,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                 requestPermissions()
             }
         }
+        gradientAnimation()
     }
 
     private fun checkPermissions(): Boolean {
@@ -202,5 +207,28 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    fun gradientAnimation() {
+        val layout = findViewById<ConstraintLayout>(R.id.main)
+        val transition = layout.background as? TransitionDrawable
+
+        var forward = true
+        val handler = Handler(Looper.getMainLooper())
+        val duration = 5000L // duración de cada transición
+
+        val runnable = object : Runnable {
+            override fun run() {
+                if (forward) {
+                    transition?.startTransition(duration.toInt())
+                } else {
+                    transition?.reverseTransition(duration.toInt())
+                }
+                forward = !forward
+                handler.postDelayed(this, duration)
+            }
+        }
+
+        handler.post(runnable)
     }
 }

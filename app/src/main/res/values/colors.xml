@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="green_primary">#2E7D32</color> <!-- Dark Green -->
+    <color name="green_light">#60AD5E</color>  <!-- Light Green -->
+    <color name="orange_accent">#FF7043</color> <!-- Vibrant Orange -->
+    <color name="orange_dark">#C63F17</color>   <!-- Darker Orange -->
+    <color name="text_color_primary">#212121</color>
+    <color name="text_color_secondary">#757575</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>
